@@ -43,7 +43,7 @@ export const SelectTrigger = ({
       className={cn(
         'flex w-full items-center justify-between gap-2 rounded-md bg-muted px-3 py-2',
         'text-sm whitespace-nowrap outline-none transition-[color,box-shadow]',
-        'focus-visible:ring-[1px] disabled:cursor-not-allowed disabled:opacity-50 ',
+        'hover:cursor-pointer focus-visible:ring-[1px] disabled:cursor-not-allowed disabled:opacity-50 ',
         'data-[size=default]:h-9 data-[size=sm]:h-8 *:data-[slot=select-value]:line-clamp-1',
         '*:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2',
         className,

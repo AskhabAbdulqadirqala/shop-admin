@@ -42,7 +42,7 @@ function TabsTrigger({ className, ...props }: TabsTriggerProps) {
       className={cn(
         'inline-flex h-full flex-1 items-center justify-center gap-1.5 py-1 px-3',
         'bg-active shadow-sm rounded-lg text-sm font-medium whitespace-nowrap',
-        'transition-all duration-300 ease-in-out focus-visible:outline-ring ',
+        'transition-all duration-300 ease-in-out focus-visible:outline-ring hover:cursor-pointer',
         'data-[state=inactive]:bg-transparent data-[state=inactive]:shadow-none',
         className,
       )}
