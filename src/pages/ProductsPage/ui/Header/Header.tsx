@@ -1,10 +1,9 @@
 'use client';
 import { useState, type FC } from 'react';
 
-import * as Select from '@/shared/ui/Select';
-
 import { AddProductBtn } from './AddProductBtn';
 import { SearchBox } from './SearchBox';
+import { SelectBox } from './SelectBox';
 
 interface HeaderProps {
   className?: string;
@@ -14,8 +13,6 @@ export const Header: FC<HeaderProps> = (props) => {
   const { className } = props;
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
   const [currentPage, setCurrentPage] = useState(1);
-
-  const categories = ['all', '1222', '12', '4'];
 
   return (
     <header className={className}>
@@ -28,24 +25,11 @@ export const Header: FC<HeaderProps> = (props) => {
         <div className='flex flex-col md:flex-row gap-4'>
           <SearchBox setCurrentPage={setCurrentPage} />
 
-          <Select.Root
-            value={categoryFilter}
-            onValueChange={(value) => {
-              setCategoryFilter(value);
-              setCurrentPage(1);
-            }}
-          >
-            <Select.Trigger className='w-full md:w-[200px]'>
-              <Select.Value />
-            </Select.Trigger>
-            <Select.Content>
-              {categories.map((cat) => (
-                <Select.Item key={cat} value={cat}>
-                  {cat === 'all' ? 'Все категории' : cat}
-                </Select.Item>
-              ))}
-            </Select.Content>
-          </Select.Root>
+          <SelectBox
+            categoryFilter={categoryFilter}
+            setCategoryFilter={setCategoryFilter}
+            setCurrentPage={setCurrentPage}
+          />
         </div>
       </div>
     </header>
