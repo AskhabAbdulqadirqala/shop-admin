@@ -5,7 +5,8 @@
   --background: #ffffff;
   --foreground: oklch(0.145 0 0);
 
-  --bg-grey: #f3f3f5;
+  --bg-muted: #f3f3f5;
+  --bg-active: #fff;
 
   --btn-primary-bg: #0b0a14;
   --btn-primary-bg-hover: #15132a;
@@ -165,8 +166,12 @@ body {
       transform: translateY(-4px) scale(0.96);
     }
   }
-}
 
-.bg-input {
-  @apply bg-[var(--bg-grey)];
+  .bg-muted {
+    @apply bg-[var(--bg-muted)];
+  }
+
+  .bg-active {
+    @apply bg-[var(--bg-active)]
+  }
 }
