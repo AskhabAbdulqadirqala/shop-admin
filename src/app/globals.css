@@ -1,19 +1,172 @@
 @import "tailwindcss";
 
 :root {
+  --font-size: 14px;
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: oklch(0.145 0 0);
+
+  --bg-grey: #f3f3f5;
+
+  --btn-primary-bg: #0b0a14;
+  --btn-primary-bg-hover: #15132a;
+  --btn-primary-text: #ffffff;
+  --btn-primary-ring: #15132a;
+
+  --btn-secondary-bg: #e5e7eb;
+  --btn-secondary-bg-hover: #d1d5db;
+  --btn-secondary-text: #111827;
+  --btn-secondary-ring: #9ca3af;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html {
+  font-size: var(--font-size);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.button {
+  @apply inline-flex items-center justify-center font-medium rounded-md select-none whitespace-nowrap
+    transition-all duration-200 focus:outline-none focus:ring-1 focus:ring-offset-1
+    active:scale-95;
+}
+.button-primary {
+  @apply bg-[var(--btn-primary-bg)] text-[var(--btn-primary-text)] shadow-md;
+}
+.button-primary:hover {
+  @apply bg-[var(--btn-primary-bg-hover)] shadow-lg;
+}
+.button-primary:focus {
+  @apply ring-[var(--btn-primary-ring)];
+}
+.button-secondary {
+  @apply bg-[var(--btn-secondary-bg)] text-[var(--btn-secondary-text)] shadow-sm;
+}
+.button-secondary:hover {
+  @apply bg-[var(--btn-secondary-bg-hover)] shadow-md;
+}
+.button-secondary:focus {
+  @apply ring-[var(--btn-secondary-ring)];
+}
+.button-sm {
+  @apply px-3 py-1.5 text-sm;
+}
+.button-md {
+  @apply px-4 py-2 text-base;
+}
+.button-lg {
+  @apply px-5 py-2.5 text-lg;
+}
+
+@layer components {
+  /* 8/10 600 */
+  ._text-xs {
+    @apply text-[8px] font-semibold leading-[10px];
+  }
+
+  /* 12/16 400 */
+  ._text-s {
+    @apply text-xs font-normal leading-4;
+  }
+
+  /* 12/20 400 */
+  ._text-m {
+    @apply text-xs font-normal leading-5;
+  }
+
+  /* 14/16 400 */
+  ._text-l {
+    @apply text-sm font-normal leading-4;
+  }
+
+  /* 12/20 - 14/20 400 */
+  ._text-xl {
+    @apply text-xs font-normal leading-5 md:text-sm md:leading-5;
+  }
+
+  /* --- Заголовки --- */
+
+  /* 12/16 600 */
+  ._title-xs {
+    @apply text-xs font-semibold leading-4;
+  }
+
+  /* 14/16 600 */
+  ._title-s {
+    @apply text-[12px] font-semibold md:text-[16px];
+  }
+
+  /* 18/22 - 20/24 700 */
+  ._title-m {
+    @apply text-lg font-bold md:text-xl;
+  }
+
+  /* 24/32 - 36/40 700 */
+  ._title-l {
+    @apply text-2xl font-bold md:text-3xl;
+  }
+}
+
+@layer base {
+  [data-slot='select-content'] {
+    @apply relative z-50 min-w-[8rem] overflow-hidden rounded-md border bg-white shadow-lg text-[var(--foreground)] border-gray-200;
+    
+    &[data-state='open'] {
+      animation: selectContentShow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    &[data-state='closed'] {
+      animation: selectContentHide 0.15s cubic-bezier(0.46, 0, 0.56, 0.45);
+    }
+  }
+
+  [data-slot='select-content'][data-side='bottom'] {
+    @apply translate-y-1;
+    animation-name: selectContentShowFromBottom;
+  }
+  
+  [data-slot='select-content'][data-side='top'] {
+    @apply -translate-y-1;
+    animation-name: selectContentShowFromTop;
+  }
+
+  @keyframes selectContentShowFromBottom {
+    from {
+      opacity: 0;
+      transform: translateY(8px) scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0px) scale(1);
+    }
+  }
+
+  @keyframes selectContentShowFromTop {
+    from {
+      opacity: 0;
+      transform: translateY(-8px) scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0px) scale(1);
+    }
+  }
+
+  @keyframes selectContentHide {
+    from {
+      opacity: 1;
+      transform: translateY(0px) scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-4px) scale(0.96);
+    }
+  }
+}
+
+.bg-input {
+  @apply bg-[var(--bg-grey)];
 }
