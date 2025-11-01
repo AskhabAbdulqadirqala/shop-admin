@@ -1,8 +1,9 @@
 'use client';
 import { useState } from 'react';
 
-import { useProducts } from '@/entites/Product/model/hooks/useProduct/useProduct';
-import { ProductCard } from '@/widgets/ProductCard/ProductCard';
+import type { Product } from '@/entites/Product';
+import { useProducts } from '@/entites/Product';
+import { ProductCard } from '@/widgets/ProductCard';
 
 import { CardsGrid } from './ui/CardsGrid';
 import { ErrorBox } from './ui/ErrorBox';
@@ -49,7 +50,7 @@ export const ProductsPage = () => {
 
         {productsIsReady && Number(paginatedData?.products.length) > 0 && (
           <CardsGrid>
-            {paginatedData?.products.map((product) => (
+            {paginatedData?.products.map((product: Product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </CardsGrid>
