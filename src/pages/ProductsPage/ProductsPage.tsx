@@ -7,6 +7,7 @@ import { ProductCard } from '@/widgets/ProductCard/ProductCard';
 import { CardsGrid } from './ui/CardsGrid';
 import { ErrorBox } from './ui/ErrorBox';
 import { Header } from './ui/Header';
+import { Pagination } from './ui/Pagination';
 import { ProductCardPlug } from './ui/ProductCardPlug';
 import { ReloadBtn } from './ui/ReloadBtn';
 
@@ -65,6 +66,19 @@ export const ProductsPage = () => {
           <ErrorBox message={error.message}>
             <ReloadBtn onClick={handleReloadClick} />
           </ErrorBox>
+        )}
+
+        {productsIsReady && totalPages && totalPages > 1 && (
+          <div className='mt-8 flex justify-center'>
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={(page) => {
+                setCurrentPage(page);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+            />
+          </div>
         )}
       </div>
     </div>

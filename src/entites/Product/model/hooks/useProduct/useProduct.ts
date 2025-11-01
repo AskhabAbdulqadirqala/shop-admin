@@ -25,8 +25,6 @@ export const useProducts = (options: UseProductsOptions) => {
         total: data.length,
         page,
         limit,
-        hasNext: endIndex < data.length,
-        hasPrev: page > 1,
       };
     },
   });

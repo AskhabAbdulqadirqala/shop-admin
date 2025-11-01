@@ -67,7 +67,7 @@ body {
   @apply ring-[var(--btn-destructive-ring)];
 }
 .button-ghost {
-  @apply hover:ring-1 hover:ring-offset-1 hover:scale-95;
+  @apply hover:ring-1 hover:scale-95;
 }
 .button-sm {
   @apply px-3 py-1.5 text-sm;

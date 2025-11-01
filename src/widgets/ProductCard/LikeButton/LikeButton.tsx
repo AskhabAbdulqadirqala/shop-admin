@@ -20,7 +20,7 @@ export const LikeButton: FC<LikeButtonProps> = (props) => {
     <Button
       variant='ghost'
       size='icon'
-      className={`absolute top-2 right-2 bg-transparent p-1 hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 ${
+      className={`absolute top-2 right-2 bg-transparent p-1 hover:bg-accent hover:text-accent-foreground ${
         isActive ? 'text-red-500' : 'text-white'
       }`}
       onClick={handleLikeClick}
