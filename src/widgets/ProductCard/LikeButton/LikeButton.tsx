@@ -6,14 +6,16 @@ import Heart from './assets/heart.svg';
 
 interface LikeButtonProps {
   isActive: boolean;
+  onClick: () => void;
 }
 
 export const LikeButton: FC<LikeButtonProps> = (props) => {
-  const { isActive } = props;
+  const { isActive, onClick } = props;
 
   const handleLikeClick = (e: MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    onClick();
   };
 
   return (

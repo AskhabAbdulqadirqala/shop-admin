@@ -1,16 +1,20 @@
+import _ from 'lodash';
+
 import type { Product } from '@/entites/Product';
 import { includesText } from '@/shared/lib/text';
 
 interface ProductFilters {
   activeCategory: string;
   searchQuery: string;
+  liked: number[];
+  filter: 'all' | 'liked';
 }
 
 export const filterProducts = (
   products: Product[],
   filters: ProductFilters,
 ): Product[] => {
-  const { activeCategory, searchQuery } = filters;
+  const { activeCategory, searchQuery, filter, liked } = filters;
 
   return products.filter((product) => {
     const isAllCategories = activeCategory === 'Все категории';
@@ -23,6 +27,9 @@ export const filterProducts = (
       searchQuery,
     );
 
-    return isProperCategory && isProperSearch;
+    const isLiked =
+      filter === 'all' || (filter === 'liked' && liked.includes(product.id));
+
+    return isLiked && isProperCategory && isProperSearch;
   });
 };

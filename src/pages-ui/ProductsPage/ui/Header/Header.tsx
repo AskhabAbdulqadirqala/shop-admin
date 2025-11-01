@@ -17,6 +17,7 @@ interface HeaderProps {
 export const Header: FC<HeaderProps> = (props) => {
   const { className, productsTotal } = props;
   const filter = useProductsStore((s) => s.filter);
+  const liked = useProductsStore((s) => s.liked);
   const setFilter = useProductsStore((s) => s.setFilter);
   const setCurrentPage = useProductsStore((s) => s.setCurrentPage);
 
@@ -44,7 +45,9 @@ export const Header: FC<HeaderProps> = (props) => {
               <Tabs.Trigger value={Filter.ALL}>
                 Все продукты {productsTotal && `(${productsTotal})`}
               </Tabs.Trigger>
-              <Tabs.Trigger value={Filter.LIKED}>Избранное ({1})</Tabs.Trigger>
+              <Tabs.Trigger value={Filter.LIKED}>
+                Избранное ({liked.length})
+              </Tabs.Trigger>
             </Tabs.List>
           </Tabs.Root>
         </div>

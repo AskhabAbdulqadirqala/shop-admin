@@ -1,4 +1,7 @@
 import Link from 'next/link';
+import type { FC } from 'react';
+
+import type { Product } from '@/entites/Product';
 
 import { Card } from './Card';
 import { CardImg } from './CardImg';
@@ -7,17 +10,25 @@ import { Description } from './Description';
 import { LikeButton } from './LikeButton/LikeButton';
 
 interface ProductCardProps {
-  product: any;
+  product: Product;
+  isLiked: boolean;
+  unlikeProduct: (id: number) => void;
+  likeProduct: (id: number) => void;
 }
 
-export function ProductCard(props: ProductCardProps) {
-  const { product } = props;
+export const ProductCard: FC<ProductCardProps> = (props) => {
+  const { product, likeProduct, unlikeProduct, isLiked } = props;
+
+  const onLikeClick = isLiked ? unlikeProduct : likeProduct;
 
   return (
     <Link href={`/products/${product.id}`} className='block h-full'>
       <Card>
         <CardImg src={product.image} title={product.title}>
-          <LikeButton isActive={product.liked} />
+          <LikeButton
+            isActive={isLiked}
+            onClick={() => onLikeClick(product.id)}
+          />
         </CardImg>
 
         <Description
@@ -31,4 +42,4 @@ export function ProductCard(props: ProductCardProps) {
       </Card>
     </Link>
   );
-}
+};

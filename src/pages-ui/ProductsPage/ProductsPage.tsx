@@ -1,4 +1,6 @@
 'use client';
+import _ from 'lodash';
+
 import type { Product } from '@/entites/Product';
 import { useProducts } from '@/entites/Product';
 import { filterProducts } from '@/features/filter-products';
@@ -18,12 +20,17 @@ export const ProductsPage = () => {
   const currentPage = useProductsStore((s) => s.currentPage);
   const activeCategory = useProductsStore((s) => s.activeCategory);
   const searchQuery = useProductsStore((s) => s.searchQuery);
+  const liked = useProductsStore((s) => s.liked);
+  const filter = useProductsStore((s) => s.filter);
+  const setLiked = useProductsStore((s) => s.setLiked);
   const setCurrentPage = useProductsStore((s) => s.setCurrentPage);
 
-  const filter = (products: Product[]) => {
+  const filterFn = (products: Product[]) => {
     return filterProducts(products, {
       activeCategory,
       searchQuery,
+      filter,
+      liked,
     });
   };
 
@@ -36,15 +43,24 @@ export const ProductsPage = () => {
   } = useProducts({
     page: currentPage,
     limit: ITEMS_PER_PAGE,
-    filter,
+    filter: filterFn,
   });
 
   const productsIsReady = !isError && !isLoading;
   const totalPages =
-    paginatedData?.totalPages && Math.ceil(paginatedData.totalPages / ITEMS_PER_PAGE);
+    paginatedData?.totalPages &&
+    Math.ceil(paginatedData.totalPages / ITEMS_PER_PAGE);
 
   const handleReloadClick = () => {
     refetch();
+  };
+
+  const likeProduct = (id: number) => {
+    setLiked(_.union(liked, [id]));
+  };
+
+  const unlikeProduct = (id: number) => {
+    setLiked(_.without(liked, id));
   };
 
   return (
@@ -62,7 +78,13 @@ export const ProductsPage = () => {
         {productsIsReady && Number(paginatedData?.products.length) > 0 && (
           <CardsGrid>
             {paginatedData?.products.map((product: Product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard
+                key={product.id}
+                product={product}
+                isLiked={liked.includes(product.id)}
+                likeProduct={likeProduct}
+                unlikeProduct={unlikeProduct}
+              />
             ))}
           </CardsGrid>
         )}

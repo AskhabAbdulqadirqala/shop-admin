@@ -8,10 +8,12 @@ interface ProductsState {
   currentPage: number;
   searchQuery: string;
   filter: Filter;
+  liked: number[];
   setActiveCategory: (category: string) => void;
   setCurrentPage: (page: number) => void;
   setSearchQuery: (query: string) => void;
   setFilter: (filter: Filter) => void;
+  setLiked: (liked: number[]) => void;
 }
 
 export const useProductsStore = create<ProductsState>((set) => ({
@@ -19,6 +21,7 @@ export const useProductsStore = create<ProductsState>((set) => ({
   currentPage: 1,
   searchQuery: '',
   filter: Filter.ALL,
+  liked: [],
   setActiveCategory: (category) => {
     if (CATEGORIES.includes(category)) {
       set({ activeCategory: category });
@@ -27,4 +30,5 @@ export const useProductsStore = create<ProductsState>((set) => ({
   setCurrentPage: (currentPage) => set({ currentPage }),
   setSearchQuery: (searchQuery) => set({ searchQuery }),
   setFilter: (filter) => set({ filter }),
+  setLiked: (liked) => set({ liked }),
 }));
