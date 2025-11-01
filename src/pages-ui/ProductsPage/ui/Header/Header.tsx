@@ -1,11 +1,13 @@
 'use client';
-import { useState, type FC } from 'react';
+import { type FC } from 'react';
 
 import * as Tabs from '@/shared/ui/Tabs';
 
 import { AddProductBtn } from './AddProductBtn';
 import { SearchBox } from './SearchBox';
 import { SelectBox } from './SelectBox';
+import { Filter } from '../../config/filters';
+import { useProductsStore } from '../../store/useProductsStore';
 
 interface HeaderProps {
   className?: string;
@@ -13,9 +15,9 @@ interface HeaderProps {
 
 export const Header: FC<HeaderProps> = (props) => {
   const { className } = props;
-  const [categoryFilter, setCategoryFilter] = useState<string>('all');
-  const [currentPage, setCurrentPage] = useState(1);
-  const [filter, setFilter] = useState<'all' | 'liked'>('all');
+  const filter = useProductsStore((s) => s.filter);
+  const setFilter = useProductsStore((s) => s.setFilter);
+  const setCurrentPage = useProductsStore((s) => s.setCurrentPage);
 
   return (
     <header className={className}>
@@ -26,24 +28,22 @@ export const Header: FC<HeaderProps> = (props) => {
 
       <div className='bg-white p-4 rounded-lg shadow-sm space-y-4'>
         <div className='flex flex-col md:flex-row gap-4'>
-          <SearchBox setCurrentPage={setCurrentPage} />
+          <SearchBox />
 
-          <SelectBox
-            categoryFilter={categoryFilter}
-            setCategoryFilter={setCategoryFilter}
-            setCurrentPage={setCurrentPage}
-          />
+          <SelectBox />
 
           <Tabs.Root
             value={filter}
             onValueChange={(value) => {
-              setFilter(value as 'all' | 'liked');
+              setFilter(value as Filter);
               setCurrentPage(1);
             }}
           >
             <Tabs.List className='grid w-full max-w-md grid-cols-2'>
-              <Tabs.Trigger value='all'>Все продукты ({12})</Tabs.Trigger>
-              <Tabs.Trigger value='liked'>Избранное ({1})</Tabs.Trigger>
+              <Tabs.Trigger value={Filter.ALL}>
+                Все продукты ({12})
+              </Tabs.Trigger>
+              <Tabs.Trigger value={Filter.LIKED}>Избранное ({1})</Tabs.Trigger>
             </Tabs.List>
           </Tabs.Root>
         </div>

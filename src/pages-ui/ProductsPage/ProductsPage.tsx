@@ -1,10 +1,9 @@
 'use client';
-import { useState } from 'react';
-
 import type { Product } from '@/entites/Product';
 import { useProducts } from '@/entites/Product';
 import { ProductCard } from '@/widgets/ProductCard';
 
+import { useProductsStore } from './store';
 import { CardsGrid } from './ui/CardsGrid';
 import { ErrorBox } from './ui/ErrorBox';
 import { Header } from './ui/Header';
@@ -15,7 +14,8 @@ import { ReloadBtn } from './ui/ReloadBtn';
 const ITEMS_PER_PAGE = 1;
 
 export const ProductsPage = () => {
-  const [currentPage, setCurrentPage] = useState(1);
+  const currentPage = useProductsStore((s) => s.currentPage);
+  const setCurrentPage = useProductsStore((s) => s.setCurrentPage);
 
   const {
     data: paginatedData,
@@ -74,7 +74,7 @@ export const ProductsPage = () => {
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}
-              onPageChange={(page) => {
+              goToPage={(page) => {
                 setCurrentPage(page);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}

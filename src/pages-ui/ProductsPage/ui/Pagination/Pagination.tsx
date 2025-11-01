@@ -5,11 +5,11 @@ import { GAP, generatePagination } from '../../lib/pagination';
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
-  onPageChange: (page: number) => void;
+  goToPage: (page: number) => void;
 }
 
 export const Pagination = (props: PaginationProps) => {
-  const { currentPage, totalPages, onPageChange } = props;
+  const { currentPage, totalPages, goToPage } = props;
   const pages = generatePagination(currentPage, totalPages);
   const isFirstPage = currentPage === 1;
   const isLastPage = currentPage === totalPages;
@@ -22,7 +22,7 @@ export const Pagination = (props: PaginationProps) => {
       {!isFirstPage && (
         <PaginationBtn
           direction='prev'
-          onClick={() => onPageChange(currentPage - 1)}
+          onClick={() => goToPage(currentPage - 1)}
         />
       )}
 
@@ -43,7 +43,7 @@ export const Pagination = (props: PaginationProps) => {
             <PaginationBtn
               key={page}
               isActive={currentPage === page}
-              onClick={() => onPageChange(page)}
+              onClick={() => goToPage(page)}
               className='w-9 h-9 p-0'
             >
               {page}
@@ -55,7 +55,7 @@ export const Pagination = (props: PaginationProps) => {
       {!isLastPage && (
         <PaginationBtn
           direction='next'
-          onClick={() => onPageChange(currentPage + 1)}
+          onClick={() => goToPage(currentPage + 1)}
         />
       )}
     </nav>

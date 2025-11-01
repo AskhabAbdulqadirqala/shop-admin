@@ -1,22 +1,18 @@
-import type { FC } from 'react';
-
 import * as Select from '@/shared/ui/Select';
 
-interface SelectBoxProps {
-  categoryFilter: string;
-  setCategoryFilter: (value: string) => void;
-  setCurrentPage: (value: number) => void;
-}
+import { CATEGORIES } from '../../../config/categories';
+import { useProductsStore } from '../../../store';
 
-export const SelectBox: FC<SelectBoxProps> = (props) => {
-  const { categoryFilter, setCategoryFilter, setCurrentPage } = props;
-  const categories = ['all', '1222', '12', '4'];
+export const SelectBox = () => {
+  const activeCategory = useProductsStore((s) => s.activeCategory);
+  const setActiveCategory = useProductsStore((s) => s.setActiveCategory);
+  const setCurrentPage = useProductsStore((s) => s.setCurrentPage);
 
   return (
     <Select.Root
-      value={categoryFilter}
+      value={activeCategory}
       onValueChange={(value) => {
-        setCategoryFilter(value);
+        setActiveCategory(value);
         setCurrentPage(1);
       }}
     >
@@ -24,9 +20,9 @@ export const SelectBox: FC<SelectBoxProps> = (props) => {
         <Select.Value />
       </Select.Trigger>
       <Select.Content>
-        {categories.map((cat) => (
+        {CATEGORIES.map((cat) => (
           <Select.Item key={cat} value={cat}>
-            {cat === 'all' ? 'Все категории' : cat}
+            {cat}
           </Select.Item>
         ))}
       </Select.Content>

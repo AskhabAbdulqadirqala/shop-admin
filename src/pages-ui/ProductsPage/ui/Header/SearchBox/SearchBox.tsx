@@ -1,16 +1,13 @@
 import { Search } from 'lucide-react';
-import type { FC } from 'react';
-import { useState } from 'react';
 
 import { Input } from '@/shared/ui/Input';
 
-interface SearchBoxProps {
-  setCurrentPage: (page: number) => void;
-}
+import { useProductsStore } from '../../../store';
 
-export const SearchBox: FC<SearchBoxProps> = (props) => {
-  const { setCurrentPage } = props;
-  const [searchQuery, setSearchQuery] = useState('');
+export const SearchBox = () => {
+  const searchQuery = useProductsStore((s) => s.searchQuery);
+  const setSearchQuery = useProductsStore((s) => s.setSearchQuery);
+  const setCurrentPage = useProductsStore((s) => s.setCurrentPage);
 
   return (
     <div className='relative flex-1'>
