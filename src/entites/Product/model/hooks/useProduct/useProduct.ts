@@ -6,10 +6,11 @@ import { type Product } from '../../product.types';
 interface UseProductsOptions {
   page: number;
   limit: number;
+  filter: (products: Product[]) => Product[];
 }
 
 export const useProducts = (options: UseProductsOptions) => {
-  const { page, limit } = options;
+  const { page, limit, filter } = options;
 
   return useQuery({
     queryKey: ['products', page, limit],
@@ -19,10 +20,13 @@ export const useProducts = (options: UseProductsOptions) => {
     select: (data: Product[]) => {
       const startIndex = (page - 1) * limit;
       const endIndex = startIndex + limit;
+      const filteredData = filter(data);
+      const paginatedData = filteredData.slice(startIndex, endIndex);
 
       return {
-        products: data.slice(startIndex, endIndex),
+        products: paginatedData,
         total: data.length,
+        totalPages: filteredData.length,
         page,
         limit,
       };

@@ -1,6 +1,7 @@
 'use client';
 import type { Product } from '@/entites/Product';
 import { useProducts } from '@/entites/Product';
+import { filterProducts } from '@/features/filter-products';
 import { ProductCard } from '@/widgets/ProductCard';
 
 import { useProductsStore } from './store';
@@ -11,11 +12,20 @@ import { Pagination } from './ui/Pagination';
 import { ProductCardPlug } from './ui/ProductCardPlug';
 import { ReloadBtn } from './ui/ReloadBtn';
 
-const ITEMS_PER_PAGE = 1;
+const ITEMS_PER_PAGE = 3;
 
 export const ProductsPage = () => {
   const currentPage = useProductsStore((s) => s.currentPage);
+  const activeCategory = useProductsStore((s) => s.activeCategory);
+  const searchQuery = useProductsStore((s) => s.searchQuery);
   const setCurrentPage = useProductsStore((s) => s.setCurrentPage);
+
+  const filter = (products: Product[]) => {
+    return filterProducts(products, {
+      activeCategory,
+      searchQuery,
+    });
+  };
 
   const {
     data: paginatedData,
@@ -26,11 +36,12 @@ export const ProductsPage = () => {
   } = useProducts({
     page: currentPage,
     limit: ITEMS_PER_PAGE,
+    filter,
   });
 
   const productsIsReady = !isError && !isLoading;
   const totalPages =
-    paginatedData?.total && Math.ceil(paginatedData.total / ITEMS_PER_PAGE);
+    paginatedData?.totalPages && Math.ceil(paginatedData.totalPages / ITEMS_PER_PAGE);
 
   const handleReloadClick = () => {
     refetch();
@@ -39,7 +50,7 @@ export const ProductsPage = () => {
   return (
     <div className='min-h-screen'>
       <div className='container mx-auto px-4 py-8'>
-        <Header className='mb-8' />
+        <Header className='mb-8' productsTotal={paginatedData?.total} />
         {isLoading && (
           <CardsGrid>
             {Array.from({ length: ITEMS_PER_PAGE }, (_, index) => (
@@ -69,11 +80,11 @@ export const ProductsPage = () => {
           </ErrorBox>
         )}
 
-        {productsIsReady && totalPages && totalPages > 1 && (
+        {productsIsReady && Number(totalPages) > 1 && (
           <div className='mt-8 flex justify-center'>
             <Pagination
               currentPage={currentPage}
-              totalPages={totalPages}
+              totalPages={Number(totalPages)}
               goToPage={(page) => {
                 setCurrentPage(page);
                 window.scrollTo({ top: 0, behavior: 'smooth' });

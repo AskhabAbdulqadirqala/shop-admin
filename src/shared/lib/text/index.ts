@@ -1,0 +1,1 @@
+export { includesText } from './text';

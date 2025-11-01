@@ -11,10 +11,11 @@ import { useProductsStore } from '../../store/useProductsStore';
 
 interface HeaderProps {
   className?: string;
+  productsTotal?: number;
 }
 
 export const Header: FC<HeaderProps> = (props) => {
-  const { className } = props;
+  const { className, productsTotal } = props;
   const filter = useProductsStore((s) => s.filter);
   const setFilter = useProductsStore((s) => s.setFilter);
   const setCurrentPage = useProductsStore((s) => s.setCurrentPage);
@@ -41,7 +42,7 @@ export const Header: FC<HeaderProps> = (props) => {
           >
             <Tabs.List className='grid w-full max-w-md grid-cols-2'>
               <Tabs.Trigger value={Filter.ALL}>
-                Все продукты ({12})
+                Все продукты {productsTotal && `(${productsTotal})`}
               </Tabs.Trigger>
               <Tabs.Trigger value={Filter.LIKED}>Избранное ({1})</Tabs.Trigger>
             </Tabs.List>
