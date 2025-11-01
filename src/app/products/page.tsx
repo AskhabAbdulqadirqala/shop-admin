@@ -1,3 +1,3 @@
-import { ProductsPage } from '@/pages/ProductsPage';
+import { ProductsPage } from '@/pages-ui/ProductsPage';
 
 export default ProductsPage;
