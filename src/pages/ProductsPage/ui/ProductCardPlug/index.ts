@@ -1,0 +1,1 @@
+export { ProductCardPlug } from './ProductCardPlug';

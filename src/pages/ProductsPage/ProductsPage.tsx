@@ -1,26 +1,70 @@
 'use client';
+import { useState } from 'react';
+
+import { useProducts } from '@/entites/Product/model/hooks/useProduct/useProduct';
 import { ProductCard } from '@/widgets/ProductCard/ProductCard';
 
+import { CardsGrid } from './ui/CardsGrid';
+import { ErrorBox } from './ui/ErrorBox';
 import { Header } from './ui/Header';
+import { ProductCardPlug } from './ui/ProductCardPlug';
+import { ReloadBtn } from './ui/ReloadBtn';
+
+const ITEMS_PER_PAGE = 9;
 
 export const ProductsPage = () => {
-  const paginatedProducts = [];
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const {
+    data: paginatedData,
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useProducts({
+    page: currentPage,
+    limit: ITEMS_PER_PAGE,
+  });
+
+  const productsIsReady = !isError && !isLoading;
+  const totalPages =
+    paginatedData?.total && Math.ceil(paginatedData.total / ITEMS_PER_PAGE);
+
+  const handleReloadClick = () => {
+    refetch();
+  };
 
   return (
     <div className='min-h-screen'>
       <div className='container mx-auto px-4 py-8'>
         <Header className='mb-8' />
+        {isLoading && (
+          <CardsGrid>
+            {Array.from({ length: ITEMS_PER_PAGE }, (_, index) => (
+              <ProductCardPlug key={index} />
+            ))}
+          </CardsGrid>
+        )}
 
-        {paginatedProducts.length > 0 ? (
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8'>
-            {paginatedProducts.map((product) => (
+        {productsIsReady && Number(paginatedData?.products.length) > 0 && (
+          <CardsGrid>
+            {paginatedData?.products.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
-          </div>
-        ) : (
-          <div className='text-center py-12 bg-white rounded-lg'>
+          </CardsGrid>
+        )}
+
+        {productsIsReady && paginatedData?.products.length === 0 && (
+          <div className='flex flex-col w-1/2 justify-center m-auto gap-4 text-center py-12 bg-white rounded-lg'>
             <p className='text-gray-500'>Продукты не найдены</p>
+            <ReloadBtn onClick={handleReloadClick} />
           </div>
+        )}
+
+        {isError && (
+          <ErrorBox message={error.message}>
+            <ReloadBtn onClick={handleReloadClick} />
+          </ErrorBox>
         )}
       </div>
     </div>
