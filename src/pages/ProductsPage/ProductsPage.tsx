@@ -1,6 +1,7 @@
 'use client';
+import { ProductCard } from '@/widgets/ProductCard/ProductCard';
+
 import { Header } from './ui/Header';
-import { ProductCard } from './ui/ProductCard/ProductCard';
 
 export const ProductsPage = () => {
   const paginatedProducts = [];
