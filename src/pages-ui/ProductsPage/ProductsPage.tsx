@@ -12,7 +12,7 @@ import { Pagination } from './ui/Pagination';
 import { ProductCardPlug } from './ui/ProductCardPlug';
 import { ReloadBtn } from './ui/ReloadBtn';
 
-const ITEMS_PER_PAGE = 9;
+const ITEMS_PER_PAGE = 1;
 
 export const ProductsPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
