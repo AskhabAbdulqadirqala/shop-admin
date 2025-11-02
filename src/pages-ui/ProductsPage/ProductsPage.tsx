@@ -6,15 +6,15 @@ import { useUrlSearchParams } from 'use-url-search-params';
 import type { Product } from '@/entites/Product';
 import { useProducts } from '@/entites/Product';
 import { filterProducts } from '@/features/filter-products';
+import { ErrorBox } from '@/shared/ui/ErrorBox';
+import { ReloadBtn } from '@/shared/ui/ReloadBtn';
 import { ProductCard } from '@/widgets/ProductCard';
 
 import { useProductsStore } from './store';
 import { CardsGrid } from './ui/CardsGrid';
-import { ErrorBox } from './ui/ErrorBox';
 import { Header } from './ui/Header';
 import { Pagination } from './ui/Pagination';
 import { ProductCardPlug } from './ui/ProductCardPlug';
-import { ReloadBtn } from './ui/ReloadBtn';
 
 const ITEMS_PER_PAGE = 9;
 
@@ -113,9 +113,11 @@ export const ProductsPage = (props: ProductsPageProps) => {
         )}
 
         {isError && (
-          <ErrorBox message={error.message}>
-            <ReloadBtn onClick={handleReloadClick} />
-          </ErrorBox>
+          <ErrorBox
+            title='Не удалось загрузить продукты'
+            message={error.message}
+            onReload={handleReloadClick}
+          />
         )}
 
         {productsIsReady && Number(totalPages) > 1 && (

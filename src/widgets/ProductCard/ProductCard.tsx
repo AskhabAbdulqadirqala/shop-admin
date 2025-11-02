@@ -2,12 +2,12 @@ import Link from 'next/link';
 import type { FC } from 'react';
 
 import type { Product } from '@/entites/Product';
+import { LikeButton } from '@/shared/ui/LikeButton';
 
 import { Card } from './Card';
 import { CardImg } from './CardImg';
 import { DeleteButton } from './DeleteButton';
 import { Description } from './Description';
-import { LikeButton } from './LikeButton/LikeButton';
 
 interface ProductCardProps {
   product: Product;

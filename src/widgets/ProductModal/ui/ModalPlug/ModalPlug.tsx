@@ -4,8 +4,8 @@ export const ModalPlug = () => {
   return (
     <>
       {/* Картинка */}
-      <Plug className='w-1/2 h-[350px] animate-pulse' />
-      <div className='flex flex-col gap-4 w-1/2 animate-pulse'>
+      <Plug className='w-full md:w-1/2 h-[350px] animate-pulse' />
+      <div className='flex flex-col gap-4 w-full md:w-1/2 animate-pulse'>
         {/* Категория */}
         <Plug className='h-6 w-26' />
         {/* Название */}
@@ -30,7 +30,7 @@ export const ModalPlug = () => {
           <Plug className='h-4' />
         </div>
         {/* Кнопка */}
-        <Plug className='h-6 w-3/4 mt-10' />
+        <Plug className='h-6 w-full md:w-3/4 mt-10' />
       </div>
     </>
   );
