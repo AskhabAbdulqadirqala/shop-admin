@@ -1,5 +1,7 @@
 'use client';
 import _ from 'lodash';
+import { useEffect } from 'react';
+import { useUrlSearchParams } from 'use-url-search-params';
 
 import type { Product } from '@/entites/Product';
 import { useProducts } from '@/entites/Product';
@@ -24,6 +26,8 @@ export const ProductsPage = () => {
   const filter = useProductsStore((s) => s.filter);
   const toggleLike = useProductsStore((s) => s.toggleLike);
   const setCurrentPage = useProductsStore((s) => s.setCurrentPage);
+
+  const [params, setParams] = useUrlSearchParams();
 
   const filterFn = (products: Product[]) => {
     return filterProducts(products, {
@@ -50,6 +54,19 @@ export const ProductsPage = () => {
   const totalPages =
     paginatedData?.totalPages &&
     Math.ceil(paginatedData.totalPages / ITEMS_PER_PAGE);
+
+  useEffect(() => {
+    const urlPage = Number(params.page);
+
+    if (
+      urlPage > 0 &&
+      urlPage !== currentPage &&
+      totalPages &&
+      urlPage < totalPages
+    ) {
+      setCurrentPage(urlPage);
+    }
+  }, [params.page, currentPage, totalPages, setCurrentPage]);
 
   const handleReloadClick = () => {
     refetch();
@@ -100,6 +117,7 @@ export const ProductsPage = () => {
               totalPages={Number(totalPages)}
               goToPage={(page) => {
                 setCurrentPage(page);
+                setParams({ page });
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
             />
