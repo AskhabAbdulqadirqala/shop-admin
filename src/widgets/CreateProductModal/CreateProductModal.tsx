@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 'use client';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
@@ -40,7 +41,6 @@ export const CreateProductModal = () => {
 
   return (
     <BaseModal
-      open={true}
       onOpenChange={handleModalClose}
       altTitle='Создание нового продукта'
     >

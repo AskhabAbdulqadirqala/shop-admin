@@ -5,7 +5,7 @@ import { cn } from '@/shared/lib/cn';
 import { Button } from '@/shared/ui/Button';
 
 interface BaseModalProps {
-  open: boolean;
+  open?: boolean;
   onOpenChange: (open: boolean) => void;
   children: React.ReactNode;
   className?: string;
@@ -18,7 +18,7 @@ interface BaseModalProps {
 }
 
 export const BaseModal = ({
-  open,
+  open = true,
   onOpenChange,
   children,
   className,
