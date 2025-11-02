@@ -39,22 +39,20 @@ export const CreateProductModal = () => {
   };
 
   return (
-    <div>
-      <BaseModal
-        open={true}
-        onOpenChange={handleModalClose}
-        altTitle='Создание нового продукта'
-      >
-        {isSubmitSuccessful ? (
-          <SuccessNotification />
-        ) : (
-          <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
-            <FormFields register={register} errors={errors} />
+    <BaseModal
+      open={true}
+      onOpenChange={handleModalClose}
+      altTitle='Создание нового продукта'
+    >
+      {isSubmitSuccessful ? (
+        <SuccessNotification />
+      ) : (
+        <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
+          <FormFields register={register} errors={errors} />
 
-            <CreateBtn isSubmitting={isSubmitting} />
-          </form>
-        )}
-      </BaseModal>
-    </div>
+          <CreateBtn isSubmitting={isSubmitting} />
+        </form>
+      )}
+    </BaseModal>
   );
 };
