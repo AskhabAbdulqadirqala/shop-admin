@@ -12,23 +12,17 @@ import { LikeButton } from './LikeButton/LikeButton';
 interface ProductCardProps {
   product: Product;
   isLiked: boolean;
-  unlikeProduct: (id: number) => void;
-  likeProduct: (id: number) => void;
+  onLike: (id: number) => void;
 }
 
 export const ProductCard: FC<ProductCardProps> = (props) => {
-  const { product, likeProduct, unlikeProduct, isLiked } = props;
-
-  const onLikeClick = isLiked ? unlikeProduct : likeProduct;
+  const { product, onLike, isLiked } = props;
 
   return (
     <Link href={`/products/${product.id}`} className='block h-full'>
       <Card>
         <CardImg src={product.image} title={product.title}>
-          <LikeButton
-            isActive={isLiked}
-            onClick={() => onLikeClick(product.id)}
-          />
+          <LikeButton isActive={isLiked} onClick={() => onLike(product.id)} />
         </CardImg>
 
         <Description

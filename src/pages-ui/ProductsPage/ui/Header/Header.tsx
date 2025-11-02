@@ -42,10 +42,10 @@ export const Header: FC<HeaderProps> = (props) => {
             }}
           >
             <Tabs.List className='grid w-full max-w-md grid-cols-2'>
-              <Tabs.Trigger value={Filter.ALL}>
+              <Tabs.Trigger className='md:w-35' value={Filter.ALL}>
                 Все продукты {productsTotal && `(${productsTotal})`}
               </Tabs.Trigger>
-              <Tabs.Trigger value={Filter.LIKED}>
+              <Tabs.Trigger className='md:w-35' value={Filter.LIKED}>
                 Избранное ({liked.length})
               </Tabs.Trigger>
             </Tabs.List>

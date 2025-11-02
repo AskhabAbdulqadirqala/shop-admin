@@ -22,7 +22,7 @@ export const ProductsPage = () => {
   const searchQuery = useProductsStore((s) => s.searchQuery);
   const liked = useProductsStore((s) => s.liked);
   const filter = useProductsStore((s) => s.filter);
-  const setLiked = useProductsStore((s) => s.setLiked);
+  const toggleLike = useProductsStore((s) => s.toggleLike);
   const setCurrentPage = useProductsStore((s) => s.setCurrentPage);
 
   const filterFn = (products: Product[]) => {
@@ -55,14 +55,6 @@ export const ProductsPage = () => {
     refetch();
   };
 
-  const likeProduct = (id: number) => {
-    setLiked(_.union(liked, [id]));
-  };
-
-  const unlikeProduct = (id: number) => {
-    setLiked(_.without(liked, id));
-  };
-
   return (
     <div className='min-h-screen'>
       <div className='container mx-auto px-4 py-8'>
@@ -82,8 +74,7 @@ export const ProductsPage = () => {
                 key={product.id}
                 product={product}
                 isLiked={liked.includes(product.id)}
-                likeProduct={likeProduct}
-                unlikeProduct={unlikeProduct}
+                onLike={toggleLike}
               />
             ))}
           </CardsGrid>
