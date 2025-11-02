@@ -7,7 +7,7 @@ export const AddProductBtn = () => {
   const router = useRouter();
 
   const handleCreateClick = () => {
-    router.push('/products/create', { scroll: false });
+    router.push('/products/create-product', { scroll: false });
   };
 
   return (
