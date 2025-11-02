@@ -16,9 +16,15 @@ import { Pagination } from './ui/Pagination';
 import { ProductCardPlug } from './ui/ProductCardPlug';
 import { ReloadBtn } from './ui/ReloadBtn';
 
-const ITEMS_PER_PAGE = 3;
+const ITEMS_PER_PAGE = 9;
 
-export const ProductsPage = () => {
+interface ProductsPageProps {
+  children?: React.ReactNode;
+}
+
+export const ProductsPage = (props: ProductsPageProps) => {
+  const { children } = props;
+
   const currentPage = useProductsStore((s) => s.currentPage);
   const activeCategory = useProductsStore((s) => s.activeCategory);
   const searchQuery = useProductsStore((s) => s.searchQuery);
@@ -74,6 +80,8 @@ export const ProductsPage = () => {
 
   return (
     <div className='min-h-screen'>
+      <>{children}</>
+
       <div className='container mx-auto px-4 py-8'>
         <Header className='mb-8' productsTotal={paginatedData?.total} />
         {isLoading && (
